@@ -1,3 +1,9 @@
 from django.contrib import admin
+from .models import Producto,DiscoDuro,Gabinete,Procesador,TarjetaVideo
 
-# Register your models here.
+
+admin.site.register(Producto)
+admin.site.register(DiscoDuro)
+admin.site.register(Gabinete)
+admin.site.register(Procesador)
+admin.site.register(TarjetaVideo)
