@@ -107,42 +107,101 @@
               </label>
               
 
-              <!--RELLENO DE LA TARGETA O FORMA DE PAGO-->
+               <!--RELLENO DE LA TARGETA O FORMA DE PAGO-->
+              
               <div>
                 <label class="credit-card-label">Nombre Titular Tarjeta</label>
-                <input type="text" class="form-control credit-inputs" placeholder="Nombre">
+                <input type="text" class="form-control credit-inputs" placeholder="Nombre" id="nombre" required pattern="[A-Za-z\s]+">
+                <span class="error-message" id="nombreError" style="color:red;"></span>
               </div>
 
               <div>
                 <label class="credit-card-label">Numero de Tarjeta</label>
-                <input type="text" class="form-control credit-inputs" placeholder="0000 0000 0000 0000">
+                <input type="text" class="form-control credit-inputs" placeholder="0000 0000 0000 0000" id="numeroTarjeta" required pattern="\d{4} \d{4} \d{4} \d{4}">
+                <span class="error-message" id="numeroTarjetaError" style="color:red;"></span>
               </div>
 
               <div class="row">
-                  <div class="col-md-6"><label class="credit-card-label">Fecha</label><input type="text" class="form-control credit-inputs" placeholder="12/24"></div>
-                  <div class="col-md-6"><label class="credit-card-label">CVV</label><input type="text" class="form-control credit-inputs" placeholder="342"></div>
+                <div class="col-md-6">
+                  <label class="credit-card-label">Fecha</label>
+                  <input type="text" class="form-control credit-inputs" placeholder="12/24" id="fecha" required pattern="\d{2}/\d{2}">
+                  <span class="error-message" id="fechaError" style="color:red;"></span>
+                </div>
+                <div class="col-md-6">
+                  <label class="credit-card-label">CVV</label>
+                  <input type="text" class="form-control credit-inputs" placeholder="342" id="cvv" required pattern="\d{3}">
+                  <span class="error-message" id="cvvError" style="color:red;"></span>
+                </div>
               </div>
 
               <hr>
               <div class="d-flex justify-content-between information"><span>Subtotal</span><span>$184.500</span></div>
               <div class="d-flex justify-content-between information"><span>Envio (Chilexpress)</span><span>$5.500</span></div>
               <div class="d-flex justify-content-between information"><span>Total</span><span>$190.990</span></div>
-              
 
-              <a href="{% url 'pagoaprobado' %}">
-                <button class="btn btn-success btn-block d-flex justify-content-between mt-3" type="button">
-                  <span><center>$190.990</center></span>
-                  <span>Pagar
-                    <i class="fa fa-long-arrow-right ml-1"></i>
-                  </span>
-                </button>
-              </a>
+              <button class="btn btn-success btn-block d-flex justify-content-between mt-3" type="button" onclick="validarYRedirigir()">
+                <span><center>$190.990</center></span>
+                <span>Pagar
+                  <i class="fa fa-long-arrow-right ml-1"></i>
+                </span>
+              </button>
 
-            </div>
+              <script>
+                function validarYRedirigir() {
+                  const nombre = document.getElementById('nombre');
+                  const numeroTarjeta = document.getElementById('numeroTarjeta');
+                  const fecha = document.getElementById('fecha');
+                  const cvv = document.getElementById('cvv');
+
+                  const nombreError = document.getElementById('nombreError');
+                  const numeroTarjetaError = document.getElementById('numeroTarjetaError');
+                  const fechaError = document.getElementById('fechaError');
+                  const cvvError = document.getElementById('cvvError');
+
+                  let valid = true;
+
+                  if (!nombre.checkValidity()) {
+                    nombreError.textContent = 'El nombre solo puede contener letras y espacios.';
+                    valid = false;
+                  } else {
+                    nombreError.textContent = '';
+                  }
+
+                  if (!numeroTarjeta.checkValidity()) {
+                    numeroTarjetaError.textContent = 'El número de tarjeta debe estar en el formato 0000 0000 0000 0000.';
+                    valid = false;
+                  } else {
+                    numeroTarjetaError.textContent = '';
+                  }
+
+                  if (!fecha.checkValidity()) {
+                    fechaError.textContent = 'La fecha debe estar en el formato MM/YY.';
+                    valid = false;
+                  } else {
+                    fechaError.textContent = '';
+                  }
+
+                  if (!cvv.checkValidity()) {
+                    cvvError.textContent = 'El CVV debe ser un número de 3 dígitos.';
+                    valid = false;
+                  } else {
+                    cvvError.textContent = '';
+                  }
+
+                  if (valid) {
+                    window.location.href = "{% url 'pagoaprobado' %}";
+                  }
+                }
+              </script>
+           </div>
+        </div>
       </div>
-  </div>
-</div>
 
+    </div>
+
+  </div>
+
+</div>
 
 <!--FIN DEL CARRITO-->
 

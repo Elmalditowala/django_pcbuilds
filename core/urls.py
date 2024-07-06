@@ -25,7 +25,7 @@ urlpatterns = [
     path('tarjetasdevideo', tarjetasdevideo, name="tarjetasdevideo"),
     path('terminoycondiciones', terminoycondiciones, name="terminoycondiciones"),
 
-    # Admin URLs for CRUD operations
+    # ulr para los crud
     path('admin/', AdminIndexView.as_view(), name='admin_index'),
     path('admin/productos/', ProductoManageView.as_view(), name='producto_manage'),
     path('admin/productos/<int:pk>/', ProductoManageView.as_view(), name='producto_manage'),
@@ -38,7 +38,7 @@ urlpatterns = [
     path('admin/tarjetas-video/', TarjetaVideoManageView.as_view(), name='tarjeta_video_manage'),
     path('admin/tarjetas-video/<int:pk>/', TarjetaVideoManageView.as_view(), name='tarjeta_video_manage'),
 
-    # Auth URLs
+    # urlsextra
     path('accounts/login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
     path('accounts/logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
 ]
