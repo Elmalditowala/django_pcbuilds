@@ -1,0 +1,11 @@
+{% extends "base_generic.html" %}
+{% block content %}
+<h1>Administración del Sistema</h1>
+<ul>
+    <li><a href="{% url 'producto_manage' %}">Gestionar Productos</a></li>
+    <li><a href="{% url 'disco_duro_manage' %}">Gestionar Discos Duros</a></li>
+    <li><a href="{% url 'gabinete_manage' %}">Gestionar Gabinetes</a></li>
+    <li><a href="{% url 'procesador_manage' %}">Gestionar Procesadores</a></li>
+    <li><a href="{% url 'tarjeta_video_manage' %}">Gestionar Tarjetas de Video</a></li>
+</ul>
+{% endblock %}
