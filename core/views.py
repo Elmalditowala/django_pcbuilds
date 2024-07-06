@@ -5,12 +5,12 @@ from django.views.generic import View
 from .models import Producto, DiscoDuro, Gabinete, Procesador, TarjetaVideo
 from .forms import ProductoForm, DiscoDuroForm, GabineteForm, ProcesadorForm, TarjetaVideoForm
 
-# Admin index view
+# VISTA ADMIN INDEX 
 class AdminIndexView(LoginRequiredMixin, View):
     def get(self, request):
         return render(request, 'admin/indexadmin.html')
 
-# Manage Views
+# CONFIG VIEWS
 class ProductoManageView(LoginRequiredMixin, View):
     def get(self, request, pk=None):
         if 'edit' in request.GET:

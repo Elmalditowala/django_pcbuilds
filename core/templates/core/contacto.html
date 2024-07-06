@@ -92,35 +92,107 @@
           <p class="infocontacto colorchange">Teléfono: +562 22353028</p>
         </div>
         <div class="col-sm-6 py-5">
-            <h2>Contactanos</h2>
+          <h2>Contactanos</h2>
 
-            <form class="ordenform">
+          <form class="ordenform" onsubmit="return validarFormulario()">
 
-              <!-- NOMBRE input -->
-              <div class="mb-3 col-xs-3">
-                <label class="form-label" for="nombre">Nombre</label>
-                <input class="form-control" id="nombre" name="nombre" type="text" placeholder="Nombre" />
-              </div>
-          
-              <!-- EMAIL  input -->
-              <div class="mb-3 col-xs-3">
-                <label class="form-label" for="email">Correo Electronico</label>
-                <input class="form-control" id="email" name="email" type="email" placeholder="Email" />
-              </div>
-          
-              <!-- MENSAJE input -->
-              <div class="mb-3">
-                <label class="form-label" for="mensaje">Mensaje</label>
-                <textarea class="form-control" id="mensaje" name="mensaje" type="text" placeholder="Escribe tu mensaje" style="height: 10rem;"></textarea>
-              </div>
-          
-              <!-- ENVIAR -->
-              <div class="d-grid">
-                <button class="btn btn-success btn-lg" id="enviar" type="enviar">Enviar</button>
-                <button type="reset" class="btn btn-primary btn-lg">Limpiar</button>
-              </div>
-          
-            </form>
+            <!-- NOMBRE input -->
+            <div class="mb-3 col-xs-3">
+              <label class="form-label" for="nombre">Nombre</label>
+              <input class="form-control" id="nombre" name="nombre" type="text" placeholder="Nombre" required pattern="[A-Za-z\s]+" />
+              <span class="error-message" id="nombreError" style="color:red;"></span>
+            </div>
+
+            <!-- EMAIL input -->
+            <div class="mb-3 col-xs-3">
+              <label class="form-label" for="email">Correo Electronico</label>
+              <input class="form-control" id="email" name="email" type="email" placeholder="Email" required />
+              <span class="error-message" id="emailError" style="color:red;"></span>
+            </div>
+
+            <!-- TELÉFONO input -->
+            <div class="mb-3 col-xs-3">
+              <label class="form-label" for="telefono">Número de Teléfono</label>
+              <input class="form-control" id="telefono" name="telefono" type="tel" placeholder="Número de Teléfono" required pattern="\d+" />
+              <span class="error-message" id="telefonoError" style="color:red;"></span>
+            </div>
+
+            <!-- DIRECCIÓN input -->
+            <div class="mb-3 col-xs-3">
+              <label class="form-label" for="direccion">Dirección</label>
+              <input class="form-control" id="direccion" name="direccion" type="text" placeholder="Dirección" required />
+              <span class="error-message" id="direccionError" style="color:red;"></span>
+            </div>
+
+            <!-- MENSAJE input -->
+            <div class="mb-3">
+              <label class="form-label" for="mensaje">Mensaje</label>
+              <textarea class="form-control" id="mensaje" name="mensaje" type="text" placeholder="Escribe tu mensaje" style="height: 10rem;" required></textarea>
+              <span class="error-message" id="mensajeError" style="color:red;"></span>
+            </div>
+
+            <!-- ENVIAR -->
+            <div class="d-grid">
+              <button class="btn btn-success btn-lg" id="enviar" type="submit">Enviar</button>
+              <button type="reset" class="btn btn-primary btn-lg">Limpiar</button>
+            </div>
+
+          </form>
+
+          <script>
+            function validarFormulario() {
+              const nombre = document.getElementById('nombre');
+              const email = document.getElementById('email');
+              const telefono = document.getElementById('telefono');
+              const direccion = document.getElementById('direccion');
+              const mensaje = document.getElementById('mensaje');
+
+              const nombreError = document.getElementById('nombreError');
+              const emailError = document.getElementById('emailError');
+              const telefonoError = document.getElementById('telefonoError');
+              const direccionError = document.getElementById('direccionError');
+              const mensajeError = document.getElementById('mensajeError');
+
+              let valid = true;
+
+              if (!nombre.checkValidity()) {
+                nombreError.textContent = 'El nombre solo puede contener letras y espacios.';
+                valid = false;
+              } else {
+                nombreError.textContent = '';
+              }
+
+              if (!email.checkValidity()) {
+                emailError.textContent = 'Introduce un correo electrónico válido.';
+                valid = false;
+              } else {
+                emailError.textContent = '';
+              }
+
+              if (!telefono.checkValidity()) {
+                telefonoError.textContent = 'El número de teléfono solo puede contener dígitos.';
+                valid = false;
+              } else {
+                telefonoError.textContent = '';
+              }
+
+              if (!direccion.checkValidity()) {
+                direccionError.textContent = 'La dirección es obligatoria.';
+                valid = false;
+              } else {
+                direccionError.textContent = '';
+              }
+
+              if (!mensaje.checkValidity()) {
+                mensajeError.textContent = 'El mensaje es obligatorio.';
+                valid = false;
+              } else {
+                mensajeError.textContent = '';
+              }
+
+              return valid;
+            }
+          </script>
 
         </div>
     </div>
