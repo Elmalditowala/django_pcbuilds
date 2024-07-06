@@ -1,0 +1,44 @@
+{% extends "base_generic.html" %}
+{% block content %}
+<h1>Administrar Productos</h1>
+{% if edit %}
+    <h2>Editar Producto</h2>
+{% elif delete %}
+    <h2>Eliminar Producto</h2>
+    <form method="post">
+        {% csrf_token %}
+        <p>¿Está seguro que desea eliminar {{ instance }}?</p>
+        <button type="submit" class="btn btn-danger">Eliminar</button>
+        <a href="{% url 'producto_manage' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+{% else %}
+    <h2>Agregar Producto</h2>
+{% endif %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">{% if edit %}Guardar{% else %}Agregar{% endif %}</button>
+</form>
+<h2>Listado de Productos</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Categoria</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+        <tr>
+            <td>{{ item.id_producto }}</td>
+            <td>{{ item.categoria_producto }}</td>
+            <td>
+                <a href="{% url 'producto_manage' pk=item.pk %}?edit=true" class="btn btn-warning">Editar</a>
+                <a href="{% url 'producto_manage' pk=item.pk %}?delete=true" class="btn btn-danger">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
