@@ -1,0 +1,53 @@
+{% extends 'core/base_generic.html' %}
+{% load static %}
+
+{% block title %}
+<title>Listado de Usuarios - PC Builds</title>
+{% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'core/Scripts/style.css' %}">
+{% endblock css %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="text-center">Listado de Usuarios</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre de Usuario</th>
+        <th>Nombre</th>
+        <th>Apellidos</th>
+        <th>Correo Electrónico</th>
+        <th>Número Telefónico</th>
+        <th>Rol</th>
+        <th>Fecha de Creación</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for usuario in usuarios %}
+      <tr>
+        <td>{{ usuario.idUsuario }}</td>
+        <td>{{ usuario.nombreUsuario }}</td>
+        <td>{{ usuario.nombre }}</td>
+        <td>{{ usuario.apellidos }}</td>
+        <td>{{ usuario.correo }}</td>
+        <td>{{ usuario.numero_telefonico }}</td>
+        <td>{{ usuario.rol.nombreRol }}</td>
+        <td>{{ usuario.fechacreacion }}</td>
+        <td>
+          <a href="{% url 'editar_usuario' usuario.idUsuario %}" class="btn btn-warning btn-sm">Editar</a>
+          <a href="{% url 'borrar_usuario' usuario.idUsuario %}" class="btn btn-danger btn-sm">Borrar</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script src="{% static 'core/Scripts/script.js' %}" defer></script>
+{% endblock js %}

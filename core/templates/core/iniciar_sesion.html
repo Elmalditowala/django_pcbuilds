@@ -1,0 +1,32 @@
+{% extends 'core/base_generic.html' %}
+{% load static %}
+
+{% block title %}
+<title>Iniciar Sesión - PC Builds</title>
+{% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'core/Scripts/style.css' %}">
+{% endblock css %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="text-center">Iniciar Sesión</h2>
+  {% if error %}
+    <div class="alert alert-danger">
+      <p>{{ error }}</p>
+    </div>
+  {% endif %}
+  <div class="fondoform">
+    <form id="loginForm" action="{% url 'iniciar_sesion' %}" method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+    </form>
+  </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script src="{% static 'core/Scripts/script.js' %}" defer></script>
+{% endblock js %}

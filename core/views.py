@@ -1,162 +1,14 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import View
-from .models import Producto, DiscoDuro, Gabinete, Procesador, TarjetaVideo
-from .forms import ProductoForm, DiscoDuroForm, GabineteForm, ProcesadorForm, TarjetaVideoForm
+from .models import UsuarioHardware, RolHardware
+from .forms import RegistroForm,RegistroUsuarioForm,LoginForm
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth import authenticate, login
 
-# VISTA ADMIN INDEX 
-class AdminIndexView(LoginRequiredMixin, View):
-    def get(self, request):
-        return render(request, 'admin/indexadmin.html')
 
-# CONFIG VIEWS
-class ProductoManageView(LoginRequiredMixin, View):
-    def get(self, request, pk=None):
-        if 'edit' in request.GET:
-            instance = get_object_or_404(Producto, pk=pk)
-            form = ProductoForm(instance=instance)
-            return render(request, 'admin/product_manage.html', {'form': form, 'edit': True})
-        elif 'delete' in request.GET:
-            instance = get_object_or_404(Producto, pk=pk)
-            if request.method == 'POST':
-                instance.delete()
-                return redirect('producto_manage')
-            return render(request, 'admin/product_manage.html', {'instance': instance, 'delete': True})
-        else:
-            form = ProductoForm()
-            items = Producto.objects.all()
-            return render(request, 'admin/product_manage.html', {'form': form, 'items': items})
-
-    def post(self, request, pk=None):
-        if pk:
-            instance = get_object_or_404(Producto, pk=pk)
-            form = ProductoForm(request.POST, instance=instance)
-        else:
-            form = ProductoForm(request.POST)
-        
-        if form.is_valid():
-            form.save()
-            return redirect('producto_manage')
-        return render(request, 'admin/product_manage.html', {'form': form})
-
-class DiscoDuroManageView(LoginRequiredMixin, View):
-    def get(self, request, pk=None):
-        if 'edit' in request.GET:
-            instance = get_object_or_404(DiscoDuro, pk=pk)
-            form = DiscoDuroForm(instance=instance)
-            return render(request, 'admin/disco_duro_manage.html', {'form': form, 'edit': True})
-        elif 'delete' in request.GET:
-            instance = get_object_or_404(DiscoDuro, pk=pk)
-            if request.method == 'POST':
-                instance.delete()
-                return redirect('disco_duro_manage')
-            return render(request, 'admin/disco_duro_manage.html', {'instance': instance, 'delete': True})
-        else:
-            form = DiscoDuroForm()
-            items = DiscoDuro.objects.all()
-            return render(request, 'admin/disco_duro_manage.html', {'form': form, 'items': items})
-
-    def post(self, request, pk=None):
-        if pk:
-            instance = get_object_or_404(DiscoDuro, pk=pk)
-            form = DiscoDuroForm(request.POST, instance=instance)
-        else:
-            form = DiscoDuroForm(request.POST)
-        
-        if form.is_valid():
-            form.save()
-            return redirect('disco_duro_manage')
-        return render(request, 'admin/disco_duro_manage.html', {'form': form})
-
-class GabineteManageView(LoginRequiredMixin, View):
-    def get(self, request, pk=None):
-        if 'edit' in request.GET:
-            instance = get_object_or_404(Gabinete, pk=pk)
-            form = GabineteForm(instance=instance)
-            return render(request, 'admin/gabinete_manage.html', {'form': form, 'edit': True})
-        elif 'delete' in request.GET:
-            instance = get_object_or_404(Gabinete, pk=pk)
-            if request.method == 'POST':
-                instance.delete()
-                return redirect('gabinete_manage')
-            return render(request, 'admin/gabinete_manage.html', {'instance': instance, 'delete': True})
-        else:
-            form = GabineteForm()
-            items = Gabinete.objects.all()
-            return render(request, 'admin/gabinete_manage.html', {'form': form, 'items': items})
-
-    def post(self, request, pk=None):
-        if pk:
-            instance = get_object_or_404(Gabinete, pk=pk)
-            form = GabineteForm(request.POST, instance=instance)
-        else:
-            form = GabineteForm(request.POST)
-        
-        if form.is_valid():
-            form.save()
-            return redirect('gabinete_manage')
-        return render(request, 'admin/gabinete_manage.html', {'form': form})
-
-class ProcesadorManageView(LoginRequiredMixin, View):
-    def get(self, request, pk=None):
-        if 'edit' in request.GET:
-            instance = get_object_or_404(Procesador, pk=pk)
-            form = ProcesadorForm(instance=instance)
-            return render(request, 'admin/procesador_manage.html', {'form': form, 'edit': True})
-        elif 'delete' in request.GET:
-            instance = get_object_or_404(Procesador, pk=pk)
-            if request.method == 'POST':
-                instance.delete()
-                return redirect('procesador_manage')
-            return render(request, 'admin/procesador_manage.html', {'instance': instance, 'delete': True})
-        else:
-            form = ProcesadorForm()
-            items = Procesador.objects.all()
-            return render(request, 'admin/procesador_manage.html', {'form': form, 'items': items})
-
-    def post(self, request, pk=None):
-        if pk:
-            instance = get_object_or_404(Procesador, pk=pk)
-            form = ProcesadorForm(request.POST, instance=instance)
-        else:
-            form = ProcesadorForm(request.POST)
-        
-        if form.is_valid():
-            form.save()
-            return redirect('procesador_manage')
-        return render(request, 'admin/procesador_manage.html', {'form': form})
-
-class TarjetaVideoManageView(LoginRequiredMixin, View):
-    def get(self, request, pk=None):
-        if 'edit' in request.GET:
-            instance = get_object_or_404(TarjetaVideo, pk=pk)
-            form = TarjetaVideoForm(instance=instance)
-            return render(request, 'admin/tarjeta_video_manage.html', {'form': form, 'edit': True})
-        elif 'delete' in request.GET:
-            instance = get_object_or_404(TarjetaVideo, pk=pk)
-            if request.method == 'POST':
-                instance.delete()
-                return redirect('tarjeta_video_manage')
-            return render(request, 'admin/tarjeta_video_manage.html', {'instance': instance, 'delete': True})
-        else:
-            form = TarjetaVideoForm()
-            items = TarjetaVideo.objects.all()
-            return render(request, 'admin/tarjeta_video_manage.html', {'form': form, 'items': items})
-
-    def post(self, request, pk=None):
-        if pk:
-            instance = get_object_or_404(TarjetaVideo, pk=pk)
-            form = TarjetaVideoForm(request.POST, instance=instance)
-        else:
-            form = TarjetaVideoForm(request.POST)
-        
-        if form.is_valid():
-            form.save()
-            return redirect('tarjeta_video_manage')
-        return render(request, 'admin/tarjeta_video_manage.html', {'form': form})
-
-# Páginas públicas
+# Vistas públicas
 def index(request):
     return render(request, 'core/index.html')
 
@@ -210,3 +62,80 @@ def tarjetasdevideo(request):
 
 def terminoycondiciones(request):
     return render(request, 'core/termino-y-condiciones.html')
+
+# Vista Admin Index
+def indexadmin(request):
+    usuarios = UsuarioHardware.objects.all()
+    return render(request, 'admin/indexadmin.html', {'usuarios': usuarios})
+
+
+# Vista para registrar usuarios admin
+def registrar_usuario_admin(request):
+    if request.method == 'POST':
+        form = RegistroForm(request.POST)
+        if form.is_valid():
+            usuario = form.save(commit=False)
+            usuario.contraseña = make_password(form.cleaned_data.get('contraseña'))
+            usuario.save()
+            return redirect('indexadmin')  
+    else:
+        form = RegistroForm()
+    roles = RolHardware.objects.all()
+    return render(request, 'admin/crear_usuario.html', {'form': form, 'roles': roles})
+
+# Vista para listar usuarios
+def listar_usuarios(request):
+    usuarios = UsuarioHardware.objects.all()
+    return render(request, 'admin/listar_usuarios.html', {'usuarios': usuarios})
+
+# Vista para editar usuarios
+def editar_usuario(request, usuario_id):
+    usuario = get_object_or_404(UsuarioHardware, idUsuario=usuario_id)
+    if request.method == 'POST':
+        form = RegistroForm(request.POST, instance=usuario)
+        if form.is_valid():
+            usuario = form.save(commit=False)
+            usuario.contraseña = make_password(form.cleaned_data.get('contraseña'))
+            usuario.save()
+            return redirect('listar_usuarios')
+    else:
+        form = RegistroForm(instance=usuario)
+    return render(request, 'admin/editar_usuario.html', {'form': form, 'usuario': usuario})
+
+# Vista para borrar usuarios
+def borrar_usuario(request, usuario_id):
+    usuario = get_object_or_404(UsuarioHardware, idUsuario=usuario_id)
+    if request.method == 'POST':
+        usuario.delete()
+        return redirect('listar_usuarios')
+    return render(request, 'admin/borrar_usuario.html', {'usuario': usuario})
+
+# Vista para crear usuarios
+def registrar_usuario(request):
+    if request.method == 'POST':
+        form = RegistroUsuarioForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.rol_id = 2  # Asigna el rol de usuario por ID
+            user.save()
+            return redirect('index')  
+    else:
+        form = RegistroUsuarioForm()
+    return render(request, 'core/registro_usuario.html', {'form': form})
+
+
+def iniciar_sesion(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('index') 
+            else:
+                return render(request, 'core/iniciar_sesion.html', {'form': form, 'error': 'Credenciales inválidas'})
+    else:
+        form = LoginForm()
+    return render(request, 'core/iniciar_sesion.html', {'form': form})

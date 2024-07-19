@@ -1,0 +1,28 @@
+{% extends 'core/base_generic.html' %}
+{% load static %}
+
+{% block title %}
+<title>Borrar Usuario - PC Builds</title>
+{% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'core/Scripts/style.css' %}">
+{% endblock css %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="text-center">Borrar Usuario</h2>
+  <div class="alert alert-danger" role="alert">
+    ¿Estás seguro de que deseas borrar al usuario "{{ usuario.nombreUsuario }}"?
+  </div>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Borrar</button>
+    <a href="{% url 'listar_usuarios' %}" class="btn btn-secondary">Cancelar</a>
+  </form>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script src="{% static 'core/Scripts/script.js' %}" defer></script>
+{% endblock js %}

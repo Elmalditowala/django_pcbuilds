@@ -1,4 +1,3 @@
-
 /*PRECIO DEL DOLAR ACTUALIZADO EN JQUERY API*/
 $.getJSON('https://mindicador.cl/api', function(data) {
     var dailyIndicators = data;
