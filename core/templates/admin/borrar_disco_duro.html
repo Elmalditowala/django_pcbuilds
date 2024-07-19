@@ -1,0 +1,11 @@
+{% extends 'core/base_generic.html' %}
+
+{% block content %}
+<h2>Borrar Disco Duro</h2>
+<p>¿Estás seguro que deseas borrar "{{ disco_duro.nombre_disco }}"?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Borrar</button>
+    <a href="{% url 'listar_discos_duros' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

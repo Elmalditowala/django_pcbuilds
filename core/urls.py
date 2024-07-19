@@ -2,7 +2,8 @@ from django.urls import path
 from django.contrib.auth.views import LogoutView
 from .views import (
     fichacomponentes, index, prearmados, carrito, contacto, discoduro, discossd, fichapc, gabinetes, memoriasram, pagoaprobado, placasmadres, politicadereembolso, procesadores, quienessomos, 
-    software, tarjetasdevideo, terminoycondiciones, indexadmin,registrar_usuario_admin,listar_usuarios,editar_usuario,borrar_usuario,registrar_usuario,iniciar_sesion
+    software, tarjetasdevideo, terminoycondiciones, indexadmin,registrar_usuario_admin,listar_usuarios,editar_usuario,borrar_usuario,registrar_usuario,iniciar_sesion,
+    listar_discos_duros,editar_disco_duro,agregar_disco_duro,borrar_disco_duro
 )
 
 urlpatterns = [
@@ -40,4 +41,12 @@ urlpatterns = [
     path('registrar/',registrar_usuario, name='registrar_usuario'),
     path('iniciar_sesion/',iniciar_sesion, name='iniciar_sesion'),
     path('cerrar_sesion/', LogoutView.as_view(next_page='iniciar_sesion'), name='cerrar_sesion'),
+
+    # URLs para los CRUDs de Disco duro
+    path('discos_duros/',listar_discos_duros, name='listar_discos_duros'),
+    path('discos_duros/agregar/',agregar_disco_duro, name='agregar_disco_duro'),
+    path('discos_duros/editar/<int:pk>/',editar_disco_duro, name='editar_disco_duro'),
+    path('discos_duros/borrar/<int:pk>/',borrar_disco_duro, name='borrar_disco_duro'),
+
+
 ]

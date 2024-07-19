@@ -1,5 +1,5 @@
 from django import forms
-from .models import UsuarioHardware
+from .models import UsuarioHardware,DiscoDuro
 
 class RegistroForm(forms.ModelForm):
     password2 = forms.CharField(widget=forms.PasswordInput(), label="Repetir Contraseña")
@@ -49,3 +49,9 @@ class RegistroUsuarioForm(forms.ModelForm):
 class LoginForm(forms.Form):
     username = forms.CharField(label="Nombre de usuario", max_length=150)
     password = forms.CharField(label="Contraseña", widget=forms.PasswordInput)
+
+
+class DiscoDuroForm(forms.ModelForm):
+    class Meta:
+        model = DiscoDuro
+        fields = '__all__'

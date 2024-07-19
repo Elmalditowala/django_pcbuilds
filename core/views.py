@@ -2,8 +2,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import View
-from .models import UsuarioHardware, RolHardware
-from .forms import RegistroForm,RegistroUsuarioForm,LoginForm
+from .models import UsuarioHardware, RolHardware,DiscoDuro
+from .forms import RegistroForm,RegistroUsuarioForm,LoginForm,DiscoDuroForm
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate, login
 
@@ -139,3 +139,40 @@ def iniciar_sesion(request):
     else:
         form = LoginForm()
     return render(request, 'core/iniciar_sesion.html', {'form': form})
+
+
+# Listar discos duros
+def listar_discos_duros(request):
+    discos_duros = DiscoDuro.objects.all()
+    return render(request, 'admin/listar_discos_duros.html', {'discos_duros': discos_duros})
+
+# Agregar disco duro
+def agregar_disco_duro(request):
+    if request.method == 'POST':
+        form = DiscoDuroForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_discos_duros')
+    else:
+        form = DiscoDuroForm()
+    return render(request, 'admin/agregar_disco_duro.html', {'form': form})
+
+# Editar disco duro
+def editar_disco_duro(request, pk):
+    disco_duro = get_object_or_404(DiscoDuro, pk=pk)
+    if request.method == 'POST':
+        form = DiscoDuroForm(request.POST, instance=disco_duro)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_discos_duros')
+    else:
+        form = DiscoDuroForm(instance=disco_duro)
+    return render(request, 'admin/editar_disco_duro.html', {'form': form})
+
+# Borrar disco duro
+def borrar_disco_duro(request, pk):
+    disco_duro = get_object_or_404(DiscoDuro, pk=pk)
+    if request.method == 'POST':
+        disco_duro.delete()
+        return redirect('listar_discos_duros')
+    return render(request, 'admin/borrar_disco_duro.html', {'disco_duro': disco_duro})

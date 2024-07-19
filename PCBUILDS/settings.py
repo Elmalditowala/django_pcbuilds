@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
-from pathlib import Path
+from pathlib import Path,os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -118,7 +118,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
+    os.path.join(BASE_DIR, 'static'),  # Asegúrate de que la carpeta 'static' exista en esta ubicación
 ]
 
 # Default primary key field type
@@ -129,4 +129,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Redirecciones después del inicio y cierre de sesión
 LOGIN_REDIRECT_URL = 'core:index'  # Cambia 'core:index' a la vista que desees redirigir después del inicio de sesión
 LOGOUT_REDIRECT_URL = 'core:index'  # Cambia 'core:index' a la vista que desees redirigir después del cierre de sesión
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
 

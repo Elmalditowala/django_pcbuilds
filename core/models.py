@@ -25,4 +25,17 @@ class UsuarioHardware(models.Model):
 
     def __str__(self):
         return f"{self.idUsuario} {self.nombreUsuario}"
+    
+
+class DiscoDuro(models.Model):
+    id_disco_duro = models.AutoField(primary_key=True, verbose_name='ID del disco duro')
+    nombre_disco = models.CharField(max_length=50, verbose_name='Nombre del disco')
+    valor_disco = models.PositiveIntegerField(verbose_name='Valor del disco')
+    descripcion_disco = models.CharField(max_length=300, verbose_name='Descripción del disco')
+    imagen_disco = models.ImageField(upload_to='discosduros/')
+
+    def __str__(self):
+        return self.nombre_disco
+
+
 
