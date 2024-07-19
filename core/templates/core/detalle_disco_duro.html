@@ -1,0 +1,34 @@
+{% extends 'core/base_generic.html' %}
+{% load static %}
+
+{% block title %}
+<title>Detalles del Disco Duro</title>
+{% endblock title %}
+
+{% block css %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% endblock css %}
+
+{% block content %}
+<div class="titulo">
+  <h1>{{ disco_duro.nombre_disco }}</h1>
+</div>
+
+<!-- Imagen del Disco Duro -->
+<div class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active" data-bs-interval="3000">
+      <img src="{{ disco_duro.imagen_disco.url }}" class="d-block w-100" alt="Imagen del disco duro">
+    </div>
+  </div>
+</div>
+
+<!-- Información del Disco Duro -->
+<div class="text-content">
+  <h2>Descripción</h2>
+  <p>{{ disco_duro.descripcion_disco }}</p>
+
+  <h2>Valor</h2>
+  <p>${{ disco_duro.valor_disco }}</p>
+</div>
+{% endblock content %}

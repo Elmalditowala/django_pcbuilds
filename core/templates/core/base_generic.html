@@ -18,14 +18,14 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'indexadmin' %}">Admin</a>
+            </li>
             <li class="nav-item active">
                 <a class="nav-link" href="{% url 'index' %}">Inicio<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'prearmados' %}">Computadores Gaming</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'indexadmin' %}">Admin</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Componentes</a>
@@ -44,7 +44,7 @@
             </li>
             <li>
                 <div class="container text-right align-items-center">
-                    <a href="{% url 'carrito' %}"><img src="{% static 'core/Imagenes/img-items-componentes/carritocompra.png' %}" width="35"></a>(3)-$189.990
+                    <a href="{% url 'ver_carrito' %}"><img src="{% static 'core/Imagenes/img-items-componentes/carritocompra.png' %}" width="35"></a>
                 </div>
             </li>
         </ul>

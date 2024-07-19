@@ -6,7 +6,9 @@ from .views import (
     fichacomponentes, index, prearmados, carrito, contacto, discoduro, discossd, fichapc, gabinetes, memoriasram, pagoaprobado, placasmadres, politicadereembolso, procesadores, quienessomos, 
     software, tarjetasdevideo, terminoycondiciones, indexadmin,registrar_usuario_admin,listar_usuarios,editar_usuario,borrar_usuario,registrar_usuario,iniciar_sesion,
     listar_discos_duros,editar_disco_duro,agregar_disco_duro,borrar_disco_duro,listar_gabinetes,agregar_gabinete,editar_gabinete,borrar_gabinete,
-    listar_procesadores,agregar_procesador,editar_procesador,borrar_procesador,listar_tarjetas_video,agregar_tarjeta_video,editar_tarjeta_video,borrar_tarjeta_video
+    listar_procesadores,agregar_procesador,editar_procesador,borrar_procesador,listar_tarjetas_video,agregar_tarjeta_video,editar_tarjeta_video,borrar_tarjeta_video,
+    ver_carrito,agregar_al_carrito,eliminar_del_carrito,detalle_disco_duro
+    
 )
 
 urlpatterns = [
@@ -50,6 +52,7 @@ urlpatterns = [
     path('discos_duros/agregar/',agregar_disco_duro, name='agregar_disco_duro'),
     path('discos_duros/editar/<int:pk>/',editar_disco_duro, name='editar_disco_duro'),
     path('discos_duros/borrar/<int:pk>/',borrar_disco_duro, name='borrar_disco_duro'),
+    path('disco_duro/<int:id_disco_duro>/',detalle_disco_duro, name='detalle_disco_duro'),
 
     # URLs para CRUDs Gabinete
     path('listar_gabinetes/',listar_gabinetes, name='listar_gabinetes'),
@@ -68,6 +71,11 @@ urlpatterns = [
     path('tarjetas_video/agregar/',agregar_tarjeta_video, name='agregar_tarjeta_video'),
     path('tarjetas_video/editar/<int:pk>/',editar_tarjeta_video, name='editar_tarjeta_video'),
     path('tarjetas_video/borrar/<int:pk>/',borrar_tarjeta_video, name='borrar_tarjeta_video'),
+
+    # URLs para Carro de compras
+    path('ver_carrito/',ver_carrito, name='ver_carrito'),
+    path('carrito/agregar/<int:producto_id>/',agregar_al_carrito, name='agregar_al_carrito'),
+    path('carrito/eliminar/<int:item_id>/',eliminar_del_carrito, name='eliminar_del_carrito'),
     
 
 

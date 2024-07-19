@@ -2,14 +2,17 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import View
-from .models import UsuarioHardware, RolHardware,DiscoDuro,Gabinete,Procesador,TarjetaVideo
-from .forms import RegistroForm,RegistroUsuarioForm,LoginForm,DiscoDuroForm,GabineteForm,ProcesadorForm,TarjetaVideoForm
+from .models import UsuarioHardware, RolHardware,DiscoDuro,Gabinete,Procesador,TarjetaVideo,Producto,Carrito,ItemCarrito
+from .forms import RegistroForm,RegistroUsuarioForm,LoginForm,DiscoDuroForm,GabineteForm,ProcesadorForm,TarjetaVideoForm,AgregarAlCarritoForm
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 
 
 # Vistas públicas
 def index(request):
+    disco_duro = DiscoDuro.objects.first()  # Obtén el primer disco duro
+    contexto = {"disco_duro": disco_duro}
     return render(request, 'core/index.html')
 
 def prearmados(request):
@@ -282,3 +285,44 @@ def borrar_tarjeta_video(request, pk):
         tarjeta_video.delete()
         return redirect('listar_tarjetas_video')
     return render(request, 'admin/borrar_tarjeta_video.html', {'tarjeta_video': tarjeta_video})
+
+
+@login_required
+def agregar_al_carrito(request, producto_id):
+    producto = get_object_or_404(Producto, id=producto_id)
+    carrito, created = Carrito.objects.get_or_create(usuario=request.user)
+    
+    if request.method == 'POST':
+        form = AgregarAlCarritoForm(request.POST)
+        if form.is_valid():
+            cantidad = form.cleaned_data['cantidad']
+            item, created = ItemCarrito.objects.get_or_create(carrito=carrito, producto=producto)
+            if not created:
+                item.cantidad += cantidad
+            else:
+                item.cantidad = cantidad
+            item.save()
+            return redirect('ver_carrito')
+    else:
+        form = AgregarAlCarritoForm()
+    
+    return render(request, 'core/agregar_al_carrito.html', {'form': form, 'producto': producto})
+
+@login_required
+def ver_carrito(request):
+    carrito, created = Carrito.objects.get_or_create(usuario=request.user)
+    return render(request, 'core/ver_carrito.html', {'carrito': carrito})
+
+@login_required
+def eliminar_del_carrito(request, item_id):
+    item = get_object_or_404(ItemCarrito, id=item_id)
+    item.delete()
+    return redirect('ver_carrito')
+
+
+
+def detalle_disco_duro(request, id_disco_duro):
+    disco_duro = get_object_or_404(DiscoDuro, id=id_disco_duro)
+    contexto = {"disco_duro": disco_duro}
+    print(id_disco_duro)
+    return render(request, 'core/detalle_disco_duro.html', contexto)

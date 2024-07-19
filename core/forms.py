@@ -1,5 +1,5 @@
 from django import forms
-from .models import UsuarioHardware,DiscoDuro,Gabinete,Procesador,TarjetaVideo
+from .models import UsuarioHardware,DiscoDuro,Gabinete,Procesador,TarjetaVideo,ItemCarrito
 
 class RegistroForm(forms.ModelForm):
     password2 = forms.CharField(widget=forms.PasswordInput(), label="Repetir Contraseña")
@@ -70,3 +70,8 @@ class TarjetaVideoForm(forms.ModelForm):
     class Meta:
         model = TarjetaVideo
         fields = '__all__'
+
+class AgregarAlCarritoForm(forms.ModelForm):
+    class Meta:
+        model = ItemCarrito
+        fields = ['cantidad']
