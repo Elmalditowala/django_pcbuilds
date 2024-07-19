@@ -2,8 +2,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import View
-from .models import UsuarioHardware, RolHardware,DiscoDuro
-from .forms import RegistroForm,RegistroUsuarioForm,LoginForm,DiscoDuroForm
+from .models import UsuarioHardware, RolHardware,DiscoDuro,Gabinete,Procesador,TarjetaVideo
+from .forms import RegistroForm,RegistroUsuarioForm,LoginForm,DiscoDuroForm,GabineteForm,ProcesadorForm,TarjetaVideoForm
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate, login
 
@@ -141,15 +141,13 @@ def iniciar_sesion(request):
     return render(request, 'core/iniciar_sesion.html', {'form': form})
 
 
-# Listar discos duros
 def listar_discos_duros(request):
     discos_duros = DiscoDuro.objects.all()
     return render(request, 'admin/listar_discos_duros.html', {'discos_duros': discos_duros})
 
-# Agregar disco duro
 def agregar_disco_duro(request):
     if request.method == 'POST':
-        form = DiscoDuroForm(request.POST)
+        form = DiscoDuroForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('listar_discos_duros')
@@ -157,11 +155,10 @@ def agregar_disco_duro(request):
         form = DiscoDuroForm()
     return render(request, 'admin/agregar_disco_duro.html', {'form': form})
 
-# Editar disco duro
 def editar_disco_duro(request, pk):
     disco_duro = get_object_or_404(DiscoDuro, pk=pk)
     if request.method == 'POST':
-        form = DiscoDuroForm(request.POST, instance=disco_duro)
+        form = DiscoDuroForm(request.POST, request.FILES, instance=disco_duro)
         if form.is_valid():
             form.save()
             return redirect('listar_discos_duros')
@@ -169,10 +166,119 @@ def editar_disco_duro(request, pk):
         form = DiscoDuroForm(instance=disco_duro)
     return render(request, 'admin/editar_disco_duro.html', {'form': form})
 
-# Borrar disco duro
 def borrar_disco_duro(request, pk):
     disco_duro = get_object_or_404(DiscoDuro, pk=pk)
     if request.method == 'POST':
         disco_duro.delete()
         return redirect('listar_discos_duros')
     return render(request, 'admin/borrar_disco_duro.html', {'disco_duro': disco_duro})
+
+
+# Listar gabinetes
+def listar_gabinetes(request):
+    gabinetes = Gabinete.objects.all()
+    return render(request, 'admin/listar_gabinetes.html', {'gabinetes': gabinetes})
+
+# Agregar gabinete
+def agregar_gabinete(request):
+    if request.method == 'POST':
+        form = GabineteForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_gabinetes')
+    else:
+        form = GabineteForm()
+    return render(request, 'admin/agregar_gabinete.html', {'form': form})
+
+# Editar gabinete
+def editar_gabinete(request, pk):
+    gabinete = get_object_or_404(Gabinete, pk=pk)
+    if request.method == 'POST':
+        form = GabineteForm(request.POST, request.FILES, instance=gabinete)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_gabinetes')
+    else:
+        form = GabineteForm(instance=gabinete)
+    return render(request, 'admin/editar_gabinete.html', {'form': form})
+
+# Borrar gabinete
+def borrar_gabinete(request, pk):
+    gabinete = get_object_or_404(Gabinete, pk=pk)
+    if request.method == 'POST':
+        gabinete.delete()
+        return redirect('listar_gabinetes')
+    return render(request, 'admin/borrar_gabinete.html', {'gabinete': gabinete})
+
+
+# Listar procesadores
+def listar_procesadores(request):
+    procesadores = Procesador.objects.all()
+    return render(request, 'admin/listar_procesadores.html', {'procesadores': procesadores})
+
+# Agregar procesador
+def agregar_procesador(request):
+    if request.method == 'POST':
+        form = ProcesadorForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_procesadores')
+    else:
+        form = ProcesadorForm()
+    return render(request, 'admin/agregar_procesador.html', {'form': form})
+
+# Editar procesador
+def editar_procesador(request, pk):
+    procesador = get_object_or_404(Procesador, pk=pk)
+    if request.method == 'POST':
+        form = ProcesadorForm(request.POST, request.FILES, instance=procesador)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_procesadores')
+    else:
+        form = ProcesadorForm(instance=procesador)
+    return render(request, 'admin/editar_procesador.html', {'form': form})
+
+# Borrar procesador
+def borrar_procesador(request, pk):
+    procesador = get_object_or_404(Procesador, pk=pk)
+    if request.method == 'POST':
+        procesador.delete()
+        return redirect('listar_procesadores')
+    return render(request, 'admin/borrar_procesador.html', {'procesador': procesador})
+
+# Listar tarjetas de video
+def listar_tarjetas_video(request):
+    tarjetas_video = TarjetaVideo.objects.all()
+    return render(request, 'admin/listar_tarjetas_video.html', {'tarjetas_video': tarjetas_video})
+
+# Agregar tarjeta de video
+def agregar_tarjeta_video(request):
+    if request.method == 'POST':
+        form = TarjetaVideoForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_tarjetas_video')
+    else:
+        form = TarjetaVideoForm()
+    return render(request, 'admin/agregar_tarjeta_video.html', {'form': form})
+
+# Editar tarjeta de video
+def editar_tarjeta_video(request, pk):
+    tarjeta_video = get_object_or_404(TarjetaVideo, pk=pk)
+    if request.method == 'POST':
+        form = TarjetaVideoForm(request.POST, request.FILES, instance=tarjeta_video)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_tarjetas_video')
+    else:
+        form = TarjetaVideoForm(instance=tarjeta_video)
+    return render(request, 'admin/editar_tarjeta_video.html', {'form': form})
+
+# Borrar tarjeta de video
+def borrar_tarjeta_video(request, pk):
+    tarjeta_video = get_object_or_404(TarjetaVideo, pk=pk)
+    if request.method == 'POST':
+        tarjeta_video.delete()
+        return redirect('listar_tarjetas_video')
+    return render(request, 'admin/borrar_tarjeta_video.html', {'tarjeta_video': tarjeta_video})

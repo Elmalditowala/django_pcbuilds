@@ -1,0 +1,34 @@
+{% extends 'core/base_generic.html' %}
+
+{% block content %}
+<h2>Listar Gabinetes</h2>
+<a href="{% url 'agregar_gabinete' %}" class="btn btn-primary">Agregar Gabinete</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Valor</th>
+            <th>Descripción</th>
+            <th>Imagen</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for gabinete in gabinetes %}
+        <tr>
+            <td>{{ gabinete.nombre_gabinete }}</td>
+            <td>{{ gabinete.valor_gabinete }}</td>
+            <td>{{ gabinete.descripcion_gabinete }}</td>
+            <td><img src="{{ gabinete.imagen_gabinete.url }}" width="100"></td>
+            <td>
+                <a href="{% url 'editar_gabinete' gabinete.pk %}" class="btn btn-warning">Editar</a>
+                <form action="{% url 'borrar_gabinete' gabinete.pk %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Borrar</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

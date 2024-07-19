@@ -1,0 +1,11 @@
+{% extends 'core/base_generic.html' %}
+
+{% block content %}
+<h2>Borrar Gabinete</h2>
+<p>¿Estás seguro que deseas borrar "{{ gabinete.nombre_gabinete }}"?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Borrar</button>
+    <a href="{% url 'listar_gabinetes' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

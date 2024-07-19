@@ -1,7 +1,7 @@
 {% extends 'core/base_generic.html' %}
 
 {% block content %}
-<h2>{% if form.instance.pk %}Editar{% else %}Agregar{% endif %} Disco Duro</h2>
+<h2>{% if form.instance.pk %}Editar{% else %}Agregar{% endif %} Gabinete</h2>
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}

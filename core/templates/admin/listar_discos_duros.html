@@ -19,7 +19,7 @@
             <td>{{ disco_duro.nombre_disco }}</td>
             <td>{{ disco_duro.valor_disco }}</td>
             <td>{{ disco_duro.descripcion_disco }}</td>
-            <td><img src="{{ disco_duro.imagen_disco }}" width="100"></td>
+            <td><img src="{{ disco_duro.imagen_disco.url }}" width="100"></td>
             <td>
                 <a href="{% url 'editar_disco_duro' disco_duro.pk %}" class="btn btn-warning">Editar</a>
                 <form action="{% url 'borrar_disco_duro' disco_duro.pk %}" method="post" style="display:inline;">

@@ -1,5 +1,5 @@
 from django import forms
-from .models import UsuarioHardware,DiscoDuro
+from .models import UsuarioHardware,DiscoDuro,Gabinete,Procesador,TarjetaVideo
 
 class RegistroForm(forms.ModelForm):
     password2 = forms.CharField(widget=forms.PasswordInput(), label="Repetir Contraseña")
@@ -54,4 +54,19 @@ class LoginForm(forms.Form):
 class DiscoDuroForm(forms.ModelForm):
     class Meta:
         model = DiscoDuro
+        fields = '__all__'
+
+class GabineteForm(forms.ModelForm):
+    class Meta:
+        model = Gabinete
+        fields = '__all__'
+
+class ProcesadorForm(forms.ModelForm):
+    class Meta:
+        model = Procesador
+        fields = '__all__'
+
+class TarjetaVideoForm(forms.ModelForm):
+    class Meta:
+        model = TarjetaVideo
         fields = '__all__'

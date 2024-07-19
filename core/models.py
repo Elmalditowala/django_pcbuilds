@@ -25,17 +25,51 @@ class UsuarioHardware(models.Model):
 
     def __str__(self):
         return f"{self.idUsuario} {self.nombreUsuario}"
-    
 
 class DiscoDuro(models.Model):
     id_disco_duro = models.AutoField(primary_key=True, verbose_name='ID del disco duro')
     nombre_disco = models.CharField(max_length=50, verbose_name='Nombre del disco')
     valor_disco = models.PositiveIntegerField(verbose_name='Valor del disco')
     descripcion_disco = models.CharField(max_length=300, verbose_name='Descripción del disco')
-    imagen_disco = models.ImageField(upload_to='discosduros/')
+    imagen_disco = models.ImageField(upload_to='discosduros/', default='discosduros/default.jpg')
 
     def __str__(self):
         return self.nombre_disco
+    
+from django.db import models
+
+class Gabinete(models.Model):
+    id_gabinete = models.AutoField(primary_key=True, verbose_name='ID del gabinete')
+    nombre_gabinete = models.CharField(max_length=50, verbose_name='Nombre del gabinete')
+    valor_gabinete = models.PositiveIntegerField(verbose_name='Valor del gabinete')
+    descripcion_gabinete = models.CharField(max_length=300, verbose_name='Descripción del gabinete')
+    imagen_gabinete = models.ImageField(upload_to='gabinetes/', default='gabinetes/default.jpg')
+
+    def __str__(self):
+        return self.nombre_gabinete
+    
+class Procesador(models.Model):
+    id_procesador = models.AutoField(primary_key=True, verbose_name='ID del procesador')
+    nombre_procesador = models.CharField(max_length=50, verbose_name='Nombre del procesador')
+    valor_procesador = models.PositiveIntegerField(verbose_name='Valor del procesador')
+    descripcion_procesador = models.CharField(max_length=300, verbose_name='Descripción del procesador')
+    imagen_procesador = models.ImageField(upload_to='procesadores/', default='procesadores/default.jpg')
+
+    def __str__(self):
+        return self.nombre_procesador
+    
+class TarjetaVideo(models.Model):
+    id_tarjeta_video = models.AutoField(primary_key=True, verbose_name='ID de la tarjeta de video')
+    nombre_tarjeta_video = models.CharField(max_length=50, verbose_name='Nombre de la tarjeta de video')
+    valor_tarjeta_video = models.PositiveIntegerField(verbose_name='Valor de la tarjeta de video')
+    descripcion_tarjeta_video = models.CharField(max_length=300, verbose_name='Descripción de la tarjeta de video')
+    imagen_tarjeta_video = models.ImageField(upload_to='tarjetasvideo/', default='tarjetasvideo/default.jpg')
+
+    def __str__(self):
+        return self.nombre_tarjeta_video
+    
+
+    
 
 
 
